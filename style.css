@@ -12,8 +12,34 @@ body {
   line-height: 1.6;
 }
 
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 18px 20px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar a {
+  color: #cccccc;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #ffffff;
+}
+
 header {
-  padding: 80px 40px;
+  padding: 80px 40px 50px;
   text-align: center;
 }
 
@@ -32,6 +58,40 @@ header p {
   letter-spacing: 0.5px;
 }
 
+.contact-info {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-info a {
+  color: #dddddd;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.contact-info a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.contact-info .dot {
+  color: #666666;
+}
+
+.section-divider {
+  width: 40%;
+  max-width: 400px;
+  height: 1px;
+  margin: 20px auto 0;
+  background: linear-gradient(to right, transparent, #ffffff, #999999, transparent);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
 .accent {
   color: #ffffff;
   font-weight: 800;
@@ -40,6 +100,19 @@ header p {
 .section {
   padding: 60px 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.reveal {
+  filter: blur(14px);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: filter 0.9s ease, opacity 0.9s ease, transform 0.9s ease;
+}
+
+.reveal.visible {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .section-title {
