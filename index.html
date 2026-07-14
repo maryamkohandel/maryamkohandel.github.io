@@ -13,17 +13,52 @@
     <p>Graphic Designer | Posters, Infographics & Visual Content</p>
   </header>
 
-  <section class="gallery">
-    <div class="gallery-item">
-      <img src="white-cane-day.jpg" alt="International White Cane Day">
-    </div>
-    <div class="gallery-item">
-      <img src="eradication-of-poverty.jpg" alt="International Day for the Eradication of Poverty">
-    </div>
-    <div class="gallery-item">
-      <img src="world-philosophy-day.jpg" alt="World Philosophy Day">
+  <section class="section">
+    <h2 class="section-title">Occasion Posters</h2>
+    <div class="gallery">
+      <div class="gallery-item" data-title="International White Cane Day" data-desc="">
+        <img src="white-cane-day.jpg" alt="International White Cane Day">
+        <div class="overlay"><span>International White Cane Day</span></div>
+      </div>
+      <div class="gallery-item" data-title="International Day for the Eradication of Poverty" data-desc="">
+        <img src="eradication-of-poverty.jpg" alt="International Day for the Eradication of Poverty">
+        <div class="overlay"><span>International Day for the Eradication of Poverty</span></div>
+      </div>
+      <div class="gallery-item" data-title="World Philosophy Day" data-desc="">
+        <img src="world-philosophy-day.jpg" alt="World Philosophy Day">
+        <div class="overlay"><span>World Philosophy Day</span></div>
+      </div>
     </div>
   </section>
 
+  <section class="section">
+    <h2 class="section-title">Infographics</h2>
+    <div class="gallery">
+      <!-- بعداً اینفوگرافیک‌هات رو اینجا اضافه می‌کنیم -->
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">AI-Generated Content</h2>
+
+    <h3 class="subsection-title">AI Posters</h3>
+    <div class="gallery">
+      <!-- بعداً پوسترهای AI رو اینجا اضافه می‌کنیم -->
+    </div>
+
+    <h3 class="subsection-title">AI Videos</h3>
+    <div class="gallery">
+      <!-- بعداً ویدیوهای AI رو اینجا اضافه می‌کنیم -->
+    </div>
+  </section>
+
+  <!-- Lightbox / Modal -->
+  <div class="modal" id="modal">
+    <span class="modal-close" id="modalClose">&times;</span>
+    <img class="modal-content" id="modalImg">
+    <p class="modal-caption" id="modalCaption"></p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
