@@ -40,17 +40,48 @@ document.addEventListener("keydown", function (e) {
 // افکت بلور محو شونده هنگام اسکرول
 const revealElements = document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver(
-  function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
 
-revealElements.forEach(function (el) {
-  observer.observe(el);
-});
+  revealElements.forEach(function (el) {
+    observer.observe(el);
+  });
+} else {
+  revealElements.forEach(function (el) {
+    el.classList.add("visible");
+  });
+}
+
+// هایلایت کردن منو بر اساس بخشی که در حال دیدنشیم
+const sections = document.querySelectorAll(".section");
+const navLinks = document.querySelectorAll(".nav-link");
+
+function updateActiveNav() {
+  let currentId = "";
+  const scrollPos = window.scrollY + window.innerHeight / 3;
+
+  sections.forEach(function (section) {
+    if (scrollPos >= section.offsetTop) {
+      currentId = section.id;
+    }
+  });
+
+  navLinks.forEach(function (link) {
+    link.classList.remove("active");
+    if (link.getAttribute("data-target") === currentId) {
+      link.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", updateActiveNav);
+window.addEventListener("load", updateActiveNav);
