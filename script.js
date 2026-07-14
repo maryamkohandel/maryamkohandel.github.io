@@ -36,3 +36,21 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+// افکت بلور محو شونده هنگام اسکرول
+const revealElements = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(
+  function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+revealElements.forEach(function (el) {
+  observer.observe(el);
+});
