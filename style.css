@@ -286,3 +286,9 @@ header p {
   cursor: pointer;
   line-height: 1;
 }
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 20px 30px;
+  }
+}
