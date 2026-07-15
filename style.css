@@ -124,8 +124,6 @@ header p {
   padding: 10px 22px;
   border-radius: 30px;
   background: transparent;
-  border: 1.5px solid;
-  border-image: linear-gradient(to top, #ffffff, #1a1a1a) 1;
   transition: background 0.25s ease, transform 0.2s ease;
 }
 
