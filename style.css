@@ -489,3 +489,11 @@ header p {
   opacity: 1;
   transform: translateY(0);
 }
+.subsubsection-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 22px 0 12px;
+  color: var(--text-sub);
+  padding-left: 12px;
+  border-left: 2px solid rgba(255, 255, 255, 0.25);
+}
