@@ -136,3 +136,133 @@ window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", fu
     applyTheme("auto");
   }
 });
+// ===== Fluid Hero Background =====
+const canvas = document.getElementById("fluidCanvas");
+const ctx = canvas.getContext("2d");
+let cw, ch;
+
+function resizeCanvas() {
+  cw = canvas.width = canvas.offsetWidth;
+  ch = canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+const blobCount = 6;
+const blobs = [];
+for (let i = 0; i < blobCount; i++) {
+  blobs.push({
+    baseX: Math.random(),
+    baseY: Math.random(),
+    radius: 120 + Math.random() * 140,
+    speed: 0.15 + Math.random() * 0.2,
+    offset: Math.random() * 1000
+  });
+}
+
+let mouseX = 0.5;
+let mouseY = 0.5;
+let mouseActive = false;
+
+canvas.addEventListener("mousemove", function (e) {
+  const rect = canvas.getBoundingClientRect();
+  mouseX = (e.clientX - rect.left) / rect.width;
+  mouseY = (e.clientY - rect.top) / rect.height;
+  mouseActive = true;
+});
+
+canvas.addEventListener("mouseleave", function () {
+  mouseActive = false;
+});
+
+function drawFluid(time) {
+  ctx.clearRect(0, 0, cw, ch);
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(0, 0, cw, ch);
+  ctx.globalCompositeOperation = "lighter";
+  ctx.filter = "blur(45px)";
+
+  blobs.forEach(function (b) {
+    const t = time * 0.001 * b.speed + b.offset;
+    let x = (b.baseX + Math.sin(t) * 0.15) * cw;
+    let y = (b.baseY + Math.cos(t * 0.8) * 0.15) * ch;
+
+    if (mouseActive) {
+      const mx = mouseX * cw;
+      const my = mouseY * ch;
+      const dx = mx - x;
+      const dy = my - y;
+      x += dx * 0.08;
+      y += dy * 0.08;
+    }
+
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, b.radius);
+    gradient.addColorStop(0, "rgba(255,255,255,0.55)");
+    gradient.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(x, y, b.radius, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.filter = "none";
+  ctx.globalCompositeOperation = "source-over";
+  requestAnimationFrame(drawFluid);
+}
+requestAnimationFrame(drawFluid);
+
+// ===== Hero scroll fade =====
+const heroDesc = document.getElementById("heroDesc");
+const scrollHint = document.querySelector(".scroll-hint");
+const heroSection = document.getElementById("hero");
+
+window.addEventListener("scroll", function () {
+  const heroHeight = heroSection.offsetHeight;
+  const progress = window.scrollY / (heroHeight * 0.4);
+  if (progress > 1) {
+    heroDesc.classList.add("faded");
+    scrollHint.classList.add("faded");
+  } else {
+    heroDesc.classList.remove("faded");
+    scrollHint.classList.remove("faded");
+  }
+});
+
+// ===== Header reveal sequence (name -> typing subtitle -> contact) =====
+const mainHeader = document.getElementById("mainHeader");
+const mainName = document.getElementById("mainName");
+const subtitleText = document.getElementById("subtitleText");
+const contactInfo = document.getElementById("contactInfo");
+const fullSubtitle = "Graphic Designer | Posters, Infographics & Visual Content";
+
+let headerRevealed = false;
+
+function typeSubtitle() {
+  let i = 0;
+  const interval = setInterval(function () {
+    subtitleText.textContent = fullSubtitle.slice(0, i + 1);
+    i++;
+    if (i >= fullSubtitle.length) {
+      clearInterval(interval);
+      setTimeout(function () {
+        contactInfo.classList.add("visible");
+      }, 300);
+    }
+  }, 35);
+}
+
+const headerObserver = new IntersectionObserver(
+  function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !headerRevealed) {
+        headerRevealed = true;
+        mainName.classList.add("visible");
+        setTimeout(typeSubtitle, 600);
+        headerObserver.unobserve(mainHeader);
+      }
+    });
+  },
+  { threshold: 0.4 }
+);
+
+headerObserver.observe(mainHeader);
