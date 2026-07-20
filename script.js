@@ -85,3 +85,54 @@ function updateActiveNav() {
 
 window.addEventListener("scroll", updateActiveNav);
 window.addEventListener("load", updateActiveNav);
+
+// ===== Theme Switcher =====
+const htmlEl = document.documentElement;
+const lightBtn = document.getElementById("lightBtn");
+const darkBtn = document.getElementById("darkBtn");
+const autoBtn = document.getElementById("autoBtn");
+const themeBtns = [lightBtn, darkBtn, autoBtn];
+
+function getSystemTheme() {
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function applyTheme(mode) {
+  // mode: "light" | "dark" | "auto"
+  const actualTheme = mode === "auto" ? getSystemTheme() : mode;
+  htmlEl.setAttribute("data-theme", actualTheme);
+
+  themeBtns.forEach(function (btn) {
+    btn.classList.remove("active");
+  });
+
+  if (mode === "light") lightBtn.classList.add("active");
+  if (mode === "dark") darkBtn.classList.add("active");
+  if (mode === "auto") autoBtn.classList.add("active");
+
+  localStorage.setItem("themePreference", mode);
+}
+
+lightBtn.addEventListener("click", function () {
+  applyTheme("light");
+});
+
+darkBtn.addEventListener("click", function () {
+  applyTheme("dark");
+});
+
+autoBtn.addEventListener("click", function () {
+  applyTheme("auto");
+});
+
+// بارگذاری اولیه: چک کردن انتخاب قبلی کاربر
+const savedTheme = localStorage.getItem("themePreference") || "dark";
+applyTheme(savedTheme);
+
+// اگه روی حالت auto باشیم، تغییرات سیستم رو دنبال کن
+window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function () {
+  const current = localStorage.getItem("themePreference");
+  if (current === "auto") {
+    applyTheme("auto");
+  }
+});
