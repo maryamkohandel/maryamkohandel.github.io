@@ -23,7 +23,6 @@
     <a href="#portfolios" class="nav-link" data-target="portfolios">Portfolio Designs</a>
   </nav>
 
-  <!-- Theme Switcher -->
   <div class="theme-switcher">
     <button class="theme-btn" id="lightBtn" title="Light mode" aria-label="Light mode">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -51,10 +50,26 @@
     </button>
   </div>
 
-  <header>
-    <h1>Maryam Kohandel <span class="accent">Gargari</span></h1>
-    <p>Graphic Designer | Posters, Infographics & Visual Content</p>
-    <div class="contact-info">
+  <!-- Hero / Intro Screen -->
+  <section class="hero" id="hero">
+    <canvas id="fluidCanvas"></canvas>
+    <div class="hero-content">
+      <h1 class="hero-name">Maryam Kohandel <span class="accent">Gargari</span></h1>
+      <p class="hero-desc" id="heroDesc">
+        Hi, I'm Maryam — a graphic designer and content creator who loves turning ideas into visual stories. For the past year, I've designed posters, infographics, and social content for a corporate PR team, taking every project from a first sketch to publication.
+        <br><br>
+        I'm also a full-time student in Historic Building Conservation, and that love for history, art, and storytelling sneaks into everything I design. Outside of work, you'll find me painting or writing short stories — and lately, exploring what AI tools can add to the creative process.
+        <br><br>
+        I'm always up for new creative collaborations, so feel free to reach out!
+      </p>
+      <div class="scroll-hint">Scroll to explore ↓</div>
+    </div>
+  </section>
+
+  <header id="mainHeader">
+    <h1 class="main-name" id="mainName">Maryam Kohandel <span class="accent">Gargari</span></h1>
+    <p id="subtitleText"></p>
+    <div class="contact-info" id="contactInfo">
       <a href="https://wa.me/989905837732" target="_blank" rel="noopener noreferrer" class="contact-box">
         +98 990 583 7732
       </a>
@@ -86,47 +101,32 @@
 
   <section class="section reveal" id="logos">
     <h2 class="section-title">Logos</h2>
-    <div class="gallery">
-      <!-- بعداً لوگوهات رو اینجا اضافه می‌کنیم -->
-    </div>
+    <div class="gallery"></div>
   </section>
 
   <section class="section reveal" id="infographics">
     <h2 class="section-title">Infographics</h2>
-    <div class="gallery">
-      <!-- بعداً اینفوگرافیک‌هات رو اینجا اضافه می‌کنیم -->
-    </div>
+    <div class="gallery"></div>
   </section>
 
   <section class="section reveal" id="ai-content">
     <h2 class="section-title">AI-Generated Content</h2>
-
     <h3 class="subsection-title" id="ai-posters">AI Posters</h3>
-    <div class="gallery">
-      <!-- بعداً پوسترهای AI رو اینجا اضافه می‌کنیم -->
-    </div>
-
+    <div class="gallery"></div>
     <h3 class="subsection-title" id="ai-videos">AI Videos</h3>
-    <div class="gallery">
-      <!-- بعداً ویدیوهای AI رو اینجا اضافه می‌کنیم -->
-    </div>
+    <div class="gallery"></div>
   </section>
 
   <section class="section reveal" id="architecture">
     <h2 class="section-title">Architecture</h2>
-    <div class="gallery">
-      <!-- بعداً رندرهای معماریت رو اینجا اضافه می‌کنیم -->
-    </div>
+    <div class="gallery"></div>
   </section>
 
   <section class="section reveal" id="portfolios">
     <h2 class="section-title">Portfolio Designs</h2>
-    <div class="gallery">
-      <!-- بعداً پورتفولیوهایی که ساختی رو اینجا اضافه می‌کنیم -->
-    </div>
+    <div class="gallery"></div>
   </section>
 
-  <!-- Lightbox / Modal -->
   <div class="modal" id="modal">
     <span class="modal-close" id="modalClose">&times;</span>
     <img class="modal-content" id="modalImg">
