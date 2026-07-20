@@ -3,21 +3,27 @@ const modalImg = document.getElementById("modalImg");
 const modalCaption = document.getElementById("modalCaption");
 const modalClose = document.getElementById("modalClose");
 
-const galleryItems = document.querySelectorAll(".gallery-item");
+function bindGalleryClicks() {
+  const galleryItems = document.querySelectorAll(".gallery-item");
+  galleryItems.forEach(function (item) {
+    item.addEventListener("click", function () {
+      const media = item.querySelector("img, video");
+      if (!media) return;
+      const title = item.getAttribute("data-title") || "";
+      const desc = item.getAttribute("data-desc") || "";
 
-galleryItems.forEach(function (item) {
-  item.addEventListener("click", function () {
-    const img = item.querySelector("img");
-    const title = item.getAttribute("data-title") || "";
-    const desc = item.getAttribute("data-desc") || "";
+      if (media.tagName === "IMG") {
+        modalImg.style.display = "block";
+        modalImg.src = media.src;
+        modalImg.alt = media.alt || "";
+      }
 
-    modalImg.src = img.src;
-    modalImg.alt = img.alt;
-    modalCaption.textContent = desc ? title + " — " + desc : title;
-
-    modal.classList.add("active");
+      modalCaption.textContent = desc ? title + " — " + desc : title;
+      modal.classList.add("active");
+    });
   });
-});
+}
+bindGalleryClicks();
 
 function closeModal() {
   modal.classList.remove("active");
@@ -86,56 +92,6 @@ function updateActiveNav() {
 window.addEventListener("scroll", updateActiveNav);
 window.addEventListener("load", updateActiveNav);
 
-// ===== Theme Switcher =====
-const htmlEl = document.documentElement;
-const lightBtn = document.getElementById("lightBtn");
-const darkBtn = document.getElementById("darkBtn");
-const autoBtn = document.getElementById("autoBtn");
-const themeBtns = [lightBtn, darkBtn, autoBtn];
-
-function getSystemTheme() {
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-}
-
-function applyTheme(mode) {
-  // mode: "light" | "dark" | "auto"
-  const actualTheme = mode === "auto" ? getSystemTheme() : mode;
-  htmlEl.setAttribute("data-theme", actualTheme);
-
-  themeBtns.forEach(function (btn) {
-    btn.classList.remove("active");
-  });
-
-  if (mode === "light") lightBtn.classList.add("active");
-  if (mode === "dark") darkBtn.classList.add("active");
-  if (mode === "auto") autoBtn.classList.add("active");
-
-  localStorage.setItem("themePreference", mode);
-}
-
-lightBtn.addEventListener("click", function () {
-  applyTheme("light");
-});
-
-darkBtn.addEventListener("click", function () {
-  applyTheme("dark");
-});
-
-autoBtn.addEventListener("click", function () {
-  applyTheme("auto");
-});
-
-// بارگذاری اولیه: چک کردن انتخاب قبلی کاربر
-const savedTheme = localStorage.getItem("themePreference") || "dark";
-applyTheme(savedTheme);
-
-// اگه روی حالت auto باشیم، تغییرات سیستم رو دنبال کن
-window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function () {
-  const current = localStorage.getItem("themePreference");
-  if (current === "auto") {
-    applyTheme("auto");
-  }
-});
 // ===== Fluid Hero Background =====
 const canvas = document.getElementById("fluidCanvas");
 const ctx = canvas.getContext("2d");
@@ -228,16 +184,16 @@ window.addEventListener("scroll", function () {
   }
 });
 
-// ===== Header reveal sequence (name -> typing subtitle -> contact) =====
-const mainHeader = document.getElementById("mainHeader");
-const mainName = document.getElementById("mainName");
+// ===== Header reveal sequence (typing subtitle -> contact) =====
 const subtitleText = document.getElementById("subtitleText");
 const contactInfo = document.getElementById("contactInfo");
 const fullSubtitle = "Graphic Designer | Posters, Infographics & Visual Content";
 
-let headerRevealed = false;
+let subtitleTyped = false;
 
 function typeSubtitle() {
+  if (subtitleTyped) return;
+  subtitleTyped = true;
   let i = 0;
   const interval = setInterval(function () {
     subtitleText.textContent = fullSubtitle.slice(0, i + 1);
@@ -251,18 +207,8 @@ function typeSubtitle() {
   }, 35);
 }
 
-const headerObserver = new IntersectionObserver(
-  function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting && !headerRevealed) {
-        headerRevealed = true;
-        mainName.classList.add("visible");
-        setTimeout(typeSubtitle, 600);
-        headerObserver.unobserve(mainHeader);
-      }
-    });
-  },
-  { threshold: 0.4 }
-);
-
-headerObserver.observe(mainHeader);
+// شروع تایپ به‌محض بارگذاری صفحه (مطمئن‌ترین حالت، بدون وابستگی به observer)
+window.addEventListener("load", function () {
+  setTimeout(typeSubtitle, 400);
+});
+</parameter>
