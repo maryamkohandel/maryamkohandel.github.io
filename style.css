@@ -50,8 +50,10 @@ body {
 }
 
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 500;
   display: flex;
   justify-content: center;
@@ -60,7 +62,16 @@ body {
   background: var(--nav-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-soft);
-  transition: background 0.4s ease;
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition: background 0.4s ease, opacity 0.5s ease, transform 0.5s ease;
+}
+
+.navbar.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .nav-link {
@@ -245,7 +256,7 @@ body {
 }
 
 #mainHeader {
-  padding: 20px 40px 50px;
+  padding: 100px 40px 50px;
   text-align: center;
   min-height: 200px;
 }
