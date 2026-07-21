@@ -92,26 +92,34 @@ function updateActiveNav() {
 window.addEventListener("scroll", updateActiveNav);
 window.addEventListener("load", updateActiveNav);
 
-// ===== Fluid Hero Background =====
+// ===== Fluid Hero Background (lightweight version) =====
 const canvas = document.getElementById("fluidCanvas");
 const ctx = canvas.getContext("2d");
 let cw, ch;
+let currentBgColor = "#000000";
 
 function resizeCanvas() {
-  cw = canvas.width = canvas.offsetWidth;
-  ch = canvas.height = canvas.offsetHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  cw = canvas.width = canvas.offsetWidth * dpr;
+  ch = canvas.height = canvas.offsetHeight * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-const blobCount = 6;
+function readBgColor() {
+  currentBgColor = getComputedStyle(document.documentElement).getPropertyValue("--bg-1").trim() || "#000000";
+}
+readBgColor();
+
+const blobCount = 4;
 const blobs = [];
 for (let i = 0; i < blobCount; i++) {
   blobs.push({
     baseX: Math.random(),
     baseY: Math.random(),
-    radius: 120 + Math.random() * 140,
-    speed: 0.15 + Math.random() * 0.2,
+    radius: 140 + Math.random() * 120,
+    speed: 0.12 + Math.random() * 0.15,
     offset: Math.random() * 1000
   });
 }
@@ -131,25 +139,31 @@ canvas.addEventListener("mouseleave", function () {
   mouseActive = false;
 });
 
-function getBgColor() {
-  return getComputedStyle(document.documentElement).getPropertyValue("--bg-1").trim() || "#000000";
-}
+let heroVisible = true;
+let animationRunning = false;
 
 function drawFluid(time) {
-  ctx.clearRect(0, 0, cw, ch);
-  ctx.fillStyle = getBgColor();
-  ctx.fillRect(0, 0, cw, ch);
+  if (!heroVisible) {
+    animationRunning = false;
+    return;
+  }
+
+  const w = canvas.offsetWidth;
+  const h = canvas.offsetHeight;
+
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = currentBgColor;
+  ctx.fillRect(0, 0, w, h);
   ctx.globalCompositeOperation = "lighter";
-  ctx.filter = "blur(45px)";
 
   blobs.forEach(function (b) {
     const t = time * 0.001 * b.speed + b.offset;
-    let x = (b.baseX + Math.sin(t) * 0.15) * cw;
-    let y = (b.baseY + Math.cos(t * 0.8) * 0.15) * ch;
+    let x = (b.baseX + Math.sin(t) * 0.15) * w;
+    let y = (b.baseY + Math.cos(t * 0.8) * 0.15) * h;
 
     if (mouseActive) {
-      const mx = mouseX * cw;
-      const my = mouseY * ch;
+      const mx = mouseX * w;
+      const my = mouseY * h;
       const dx = mx - x;
       const dy = my - y;
       x += dx * 0.08;
@@ -157,7 +171,8 @@ function drawFluid(time) {
     }
 
     const gradient = ctx.createRadialGradient(x, y, 0, x, y, b.radius);
-    gradient.addColorStop(0, "rgba(255,255,255,0.55)");
+    gradient.addColorStop(0, "rgba(255,255,255,0.45)");
+    gradient.addColorStop(0.6, "rgba(255,255,255,0.12)");
     gradient.addColorStop(1, "rgba(255,255,255,0)");
     ctx.fillStyle = gradient;
     ctx.beginPath();
@@ -165,17 +180,39 @@ function drawFluid(time) {
     ctx.fill();
   });
 
-  ctx.filter = "none";
   ctx.globalCompositeOperation = "source-over";
   requestAnimationFrame(drawFluid);
 }
-requestAnimationFrame(drawFluid);
 
-// ===== Hero scroll fade =====
+function startFluidAnimation() {
+  if (!animationRunning) {
+    animationRunning = true;
+    requestAnimationFrame(drawFluid);
+  }
+}
+startFluidAnimation();
+
+// وقتی هیرو از دید خارج بشه، انیمیشن متوقف می‌شه تا لگ نده
+const heroSectionEl = document.getElementById("hero");
+if ("IntersectionObserver" in window) {
+  const heroObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        heroVisible = entry.isIntersecting;
+        if (heroVisible) {
+          startFluidAnimation();
+        }
+      });
+    },
+    { threshold: 0 }
+  );
+  heroObserver.observe(heroSectionEl);
+}
+
+// ===== Hero scroll fade + navbar reveal =====
 const heroDesc = document.getElementById("heroDesc");
 const scrollHint = document.querySelector(".scroll-hint");
 const heroSection = document.getElementById("hero");
-
 const navbar = document.getElementById("navbar");
 
 window.addEventListener("scroll", function () {
@@ -219,7 +256,55 @@ function typeSubtitle() {
   }, 35);
 }
 
-// شروع تایپ به‌محض بارگذاری صفحه (مطمئن‌ترین حالت، بدون وابستگی به observer)
 window.addEventListener("load", function () {
   setTimeout(typeSubtitle, 400);
+});
+
+// ===== Theme Switcher =====
+const htmlEl = document.documentElement;
+const lightBtn = document.getElementById("lightBtn");
+const darkBtn = document.getElementById("darkBtn");
+const autoBtn = document.getElementById("autoBtn");
+const themeBtns = [lightBtn, darkBtn, autoBtn];
+
+function getSystemTheme() {
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function applyTheme(mode) {
+  const actualTheme = mode === "auto" ? getSystemTheme() : mode;
+  htmlEl.setAttribute("data-theme", actualTheme);
+
+  themeBtns.forEach(function (btn) {
+    btn.classList.remove("active");
+  });
+
+  if (mode === "light") lightBtn.classList.add("active");
+  if (mode === "dark") darkBtn.classList.add("active");
+  if (mode === "auto") autoBtn.classList.add("active");
+
+  localStorage.setItem("themePreference", mode);
+  readBgColor();
+}
+
+lightBtn.addEventListener("click", function () {
+  applyTheme("light");
+});
+
+darkBtn.addEventListener("click", function () {
+  applyTheme("dark");
+});
+
+autoBtn.addEventListener("click", function () {
+  applyTheme("auto");
+});
+
+const savedTheme = localStorage.getItem("themePreference") || "dark";
+applyTheme(savedTheme);
+
+window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function () {
+  const current = localStorage.getItem("themePreference");
+  if (current === "auto") {
+    applyTheme("auto");
+  }
 });
