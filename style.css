@@ -218,14 +218,14 @@ body {
 .hero-name {
   font-size: 3.2rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #ffffff;
   letter-spacing: -1px;
   text-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
 }
 
 .hero-desc {
   margin-top: 26px;
-  color: var(--text-sub);
+  color: #eeeeee;
   font-size: 1.05rem;
   line-height: 1.85;
   transition: opacity 0.4s ease, transform 0.4s ease;
@@ -239,11 +239,12 @@ body {
 
 .scroll-hint {
   margin-top: 44px;
-  color: var(--text-muted);
+  color: #999999;
   font-size: 0.85rem;
   letter-spacing: 1px;
   animation: bounce 2s infinite;
   transition: opacity 0.4s ease;
+  cursor: pointer;
 }
 
 .scroll-hint.faded {
@@ -267,7 +268,6 @@ body {
   letter-spacing: -0.5px;
   color: var(--text-main);
   text-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
-  opacity: 1;
 }
 
 #subtitleText {
@@ -292,14 +292,6 @@ body {
 #contactInfo.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-.contact-info {
-  margin-top: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
 }
 
 .contact-box {
@@ -395,8 +387,7 @@ body {
   box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
 }
 
-.gallery-item img,
-.gallery-item video {
+.gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -405,8 +396,7 @@ body {
   transition: filter 0.3s ease;
 }
 
-.gallery-item:hover img,
-.gallery-item:hover video {
+.gallery-item:hover img {
   filter: blur(2px) brightness(0.6);
 }
 
@@ -483,72 +473,6 @@ body {
   line-height: 1;
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    flex-wrap: wrap;
-    gap: 20px 30px;
-  }
-
-  .theme-switcher {
-    top: auto;
-    bottom: 20px;
-    right: 16px;
-    transform: none;
-    flex-direction: row;
-  }
-}
-.video-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-}
-
-.video-item {
-  position: relative;
-  border-radius: 10px;
-  padding: 4px;
-  background: var(--frame-gradient);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.video-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
-}
-
-.video-item video {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 7px;
-  display: block;
-  background: #000;
-}
-.video-gallery {
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-
-.video-card {
-  position: relative;
-  border-radius: 10px;
-  padding: 4px;
-  background: var(--frame-gradient);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.video-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
-}
-
-.video-card video {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 7px;
-  display: block;
-  background: #000000;
-}
 .carousel-wrapper {
   position: relative;
   max-width: 640px;
@@ -637,10 +561,24 @@ body {
   letter-spacing: 0.3px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 20px 30px;
+  }
+
+  .theme-switcher {
+    top: auto;
+    bottom: 20px;
+    right: 16px;
+    transform: none;
+    flex-direction: row;
+  }
+
   .carousel-wrapper {
     gap: 8px;
   }
+
   .carousel-arrow {
     width: 36px;
     height: 36px;
