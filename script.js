@@ -131,9 +131,13 @@ canvas.addEventListener("mouseleave", function () {
   mouseActive = false;
 });
 
+function getBgColor() {
+  return getComputedStyle(document.documentElement).getPropertyValue("--bg-1").trim() || "#000000";
+}
+
 function drawFluid(time) {
   ctx.clearRect(0, 0, cw, ch);
-  ctx.fillStyle = "#000000";
+  ctx.fillStyle = getBgColor();
   ctx.fillRect(0, 0, cw, ch);
   ctx.globalCompositeOperation = "lighter";
   ctx.filter = "blur(45px)";
@@ -172,6 +176,8 @@ const heroDesc = document.getElementById("heroDesc");
 const scrollHint = document.querySelector(".scroll-hint");
 const heroSection = document.getElementById("hero");
 
+const navbar = document.getElementById("navbar");
+
 window.addEventListener("scroll", function () {
   const heroHeight = heroSection.offsetHeight;
   const progress = window.scrollY / (heroHeight * 0.4);
@@ -181,6 +187,12 @@ window.addEventListener("scroll", function () {
   } else {
     heroDesc.classList.remove("faded");
     scrollHint.classList.remove("faded");
+  }
+
+  if (window.scrollY > heroHeight * 0.6) {
+    navbar.classList.add("visible");
+  } else {
+    navbar.classList.remove("visible");
   }
 });
 
