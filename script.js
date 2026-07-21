@@ -211,4 +211,3 @@ function typeSubtitle() {
 window.addEventListener("load", function () {
   setTimeout(typeSubtitle, 400);
 });
-</parameter>
