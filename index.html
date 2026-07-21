@@ -80,22 +80,26 @@
 
   <div class="section-divider"></div>
 
-  <section class="section reveal" id="posters">
+<section class="section reveal" id="posters">
     <h2 class="section-title">Occasion Posters</h2>
-    <div class="gallery">
-      <div class="gallery-item" data-title="International White Cane Day" data-desc="">
-        <img src="white-cane-day.jpg" alt="International White Cane Day">
-        <div class="overlay"><span>International White Cane Day</span></div>
+    <div class="carousel-wrapper">
+      <button class="carousel-arrow carousel-prev" aria-label="Previous poster">&#10094;</button>
+      <div class="carousel-viewport">
+        <div class="carousel-track">
+          <div class="carousel-item" data-title="International White Cane Day">
+            <img src="white-cane-day.jpg" alt="International White Cane Day">
+          </div>
+          <div class="carousel-item" data-title="International Day for the Eradication of Poverty">
+            <img src="eradication-of-poverty.jpg" alt="International Day for the Eradication of Poverty">
+          </div>
+          <div class="carousel-item" data-title="World Philosophy Day">
+            <img src="world-philosophy-day.jpg" alt="World Philosophy Day">
+          </div>
+        </div>
       </div>
-      <div class="gallery-item" data-title="International Day for the Eradication of Poverty" data-desc="">
-        <img src="eradication-of-poverty.jpg" alt="International Day for the Eradication of Poverty">
-        <div class="overlay"><span>International Day for the Eradication of Poverty</span></div>
-      </div>
-      <div class="gallery-item" data-title="World Philosophy Day" data-desc="">
-        <img src="world-philosophy-day.jpg" alt="World Philosophy Day">
-        <div class="overlay"><span>World Philosophy Day</span></div>
-      </div>
+      <button class="carousel-arrow carousel-next" aria-label="Next poster">&#10095;</button>
     </div>
+    <div class="carousel-caption"></div>
   </section>
 
   <section class="section reveal" id="logos">
@@ -117,18 +121,25 @@
     <h3 class="subsection-title" id="ai-videos">AI Videos</h3>
 
 <h4 class="subsubsection-title">Ad Videos</h4>
-    <div class="gallery video-gallery">
-      <div class="video-card">
-        <video controls preload="metadata" poster="nike-ad-video-cover.jpg" playsinline>
-          <source src="nike-ad-video.mp4" type="video/mp4">
-        </video>
+    <div class="carousel-wrapper">
+      <button class="carousel-arrow carousel-prev" aria-label="Previous video">&#10094;</button>
+      <div class="carousel-viewport">
+        <div class="carousel-track">
+          <div class="carousel-item carousel-item-video" data-title="">
+            <video controls preload="metadata" poster="nike-ad-video-cover.jpg" playsinline>
+              <source src="nike-ad-video.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="carousel-item carousel-item-video" data-title="">
+            <video controls preload="metadata" poster="dior-ad-video-cover.jpg" playsinline>
+              <source src="dior-ad-video.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
       </div>
-      <div class="video-card">
-        <video controls preload="metadata" poster="dior-ad-video-cover.jpg" playsinline>
-          <source src="dior-ad-video.mp4" type="video/mp4">
-        </video>
-      </div>
+      <button class="carousel-arrow carousel-next" aria-label="Next video">&#10095;</button>
     </div>
+    <div class="carousel-caption"></div>
 
     <h4 class="subsubsection-title">Animation</h4>
     <div class="gallery"></div>
