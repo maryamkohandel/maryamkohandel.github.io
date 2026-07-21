@@ -315,3 +315,61 @@ window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", fu
     applyTheme("auto");
   }
 });
+// ===== Carousel (Posters / Ad Videos) =====
+function initCarousel(wrapper) {
+  const track = wrapper.querySelector(".carousel-track");
+  const viewport = wrapper.querySelector(".carousel-viewport");
+  const items = Array.from(wrapper.querySelectorAll(".carousel-item"));
+  const prevBtn = wrapper.querySelector(".carousel-prev");
+  const nextBtn = wrapper.querySelector(".carousel-next");
+  const caption = wrapper.parentElement.querySelector(".carousel-caption");
+  let index = 0;
+  let typingInterval = null;
+
+  function typeCaption(text) {
+    if (!caption) return;
+    if (typingInterval) clearInterval(typingInterval);
+    caption.textContent = "";
+    if (!text) return;
+    let i = 0;
+    typingInterval = setInterval(function () {
+      caption.textContent = text.slice(0, i + 1);
+      i++;
+      if (i >= text.length) clearInterval(typingInterval);
+    }, 35);
+  }
+
+  function update() {
+    items.forEach(function (item, i) {
+      item.classList.toggle("active", i === index);
+    });
+    const activeItem = items[index];
+    const offset = activeItem.offsetLeft + activeItem.offsetWidth / 2 - viewport.offsetWidth / 2;
+    track.style.transform = "translateX(" + -offset + "px)";
+    typeCaption(activeItem.getAttribute("data-title") || "");
+  }
+
+  prevBtn.addEventListener("click", function () {
+    index = (index - 1 + items.length) % items.length;
+    update();
+  });
+
+  nextBtn.addEventListener("click", function () {
+    index = (index + 1) % items.length;
+    update();
+  });
+
+  items.forEach(function (item, i) {
+    item.addEventListener("click", function () {
+      index = i;
+      update();
+    });
+  });
+
+  window.addEventListener("resize", update);
+  update();
+}
+
+document.querySelectorAll(".carousel-wrapper").forEach(function (wrapper) {
+  initCarousel(wrapper);
+});
