@@ -524,3 +524,28 @@ body {
   display: block;
   background: #000;
 }
+.video-gallery {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.video-card {
+  position: relative;
+  border-radius: 10px;
+  padding: 4px;
+  background: var(--frame-gradient);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+}
+
+.video-card video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 7px;
+  display: block;
+  background: #000000;
+}
