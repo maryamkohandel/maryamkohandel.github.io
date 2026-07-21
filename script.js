@@ -212,6 +212,13 @@ if ("IntersectionObserver" in window) {
 // ===== Hero scroll fade + navbar reveal =====
 const heroDesc = document.getElementById("heroDesc");
 const scrollHint = document.querySelector(".scroll-hint");
+scrollHint.style.cursor = "pointer";
+scrollHint.addEventListener("click", function () {
+  window.scrollTo({
+    top: heroSection.offsetHeight,
+    behavior: "smooth"
+  });
+});
 const heroSection = document.getElementById("hero");
 const navbar = document.getElementById("navbar");
 
