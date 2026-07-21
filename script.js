@@ -43,7 +43,6 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// افکت بلور محو شونده هنگام اسکرول
 const revealElements = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
@@ -67,7 +66,6 @@ if ("IntersectionObserver" in window) {
   });
 }
 
-// هایلایت کردن منو بر اساس بخشی که در حال دیدنشیم
 const sections = document.querySelectorAll(".section");
 const navLinks = document.querySelectorAll(".nav-link");
 
@@ -92,7 +90,6 @@ function updateActiveNav() {
 window.addEventListener("scroll", updateActiveNav);
 window.addEventListener("load", updateActiveNav);
 
-// ===== Fluid Hero Background (lightweight version) =====
 const canvas = document.getElementById("fluidCanvas");
 const ctx = canvas.getContext("2d");
 let cw, ch;
@@ -192,7 +189,6 @@ function startFluidAnimation() {
 }
 startFluidAnimation();
 
-// وقتی هیرو از دید خارج بشه، انیمیشن متوقف می‌شه تا لگ نده
 const heroSectionEl = document.getElementById("hero");
 if ("IntersectionObserver" in window) {
   const heroObserver = new IntersectionObserver(
@@ -209,16 +205,8 @@ if ("IntersectionObserver" in window) {
   heroObserver.observe(heroSectionEl);
 }
 
-// ===== Hero scroll fade + navbar reveal =====
 const heroDesc = document.getElementById("heroDesc");
 const scrollHint = document.querySelector(".scroll-hint");
-scrollHint.style.cursor = "pointer";
-scrollHint.addEventListener("click", function () {
-  window.scrollTo({
-    top: heroSection.offsetHeight,
-    behavior: "smooth"
-  });
-});
 const heroSection = document.getElementById("hero");
 const navbar = document.getElementById("navbar");
 
@@ -240,7 +228,13 @@ window.addEventListener("scroll", function () {
   }
 });
 
-// ===== Header reveal sequence (typing subtitle -> contact) =====
+scrollHint.addEventListener("click", function () {
+  window.scrollTo({
+    top: heroSection.offsetHeight,
+    behavior: "smooth"
+  });
+});
+
 const subtitleText = document.getElementById("subtitleText");
 const contactInfo = document.getElementById("contactInfo");
 const fullSubtitle = "Graphic Designer | Posters, Infographics & Visual Content";
@@ -267,7 +261,6 @@ window.addEventListener("load", function () {
   setTimeout(typeSubtitle, 400);
 });
 
-// ===== Theme Switcher =====
 const htmlEl = document.documentElement;
 const lightBtn = document.getElementById("lightBtn");
 const darkBtn = document.getElementById("darkBtn");
@@ -315,7 +308,7 @@ window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", fu
     applyTheme("auto");
   }
 });
-// ===== Carousel (Posters / Ad Videos) =====
+
 function initCarousel(wrapper) {
   const track = wrapper.querySelector(".carousel-track");
   const viewport = wrapper.querySelector(".carousel-viewport");
@@ -345,7 +338,7 @@ function initCarousel(wrapper) {
     });
     const activeItem = items[index];
     const offset = activeItem.offsetLeft + activeItem.offsetWidth / 2 - viewport.offsetWidth / 2;
-    track.style.transform = "translateX(" + -offset + "px)";
+    track.style.transform = "translateX(" + (-offset) + "px)";
     typeCaption(activeItem.getAttribute("data-title") || "");
   }
 
