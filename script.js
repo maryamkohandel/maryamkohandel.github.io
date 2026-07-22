@@ -342,6 +342,17 @@ function initCarousel(wrapper) {
     typeCaption(activeItem.getAttribute("data-title") || "");
   }
 
+  function openItemModal(item) {
+    const img = item.querySelector("img");
+    if (!img) return;
+    const title = item.getAttribute("data-title") || "";
+    modalImg.style.display = "block";
+    modalImg.src = img.src;
+    modalImg.alt = img.alt || "";
+    modalCaption.textContent = title;
+    modal.classList.add("active");
+  }
+
   prevBtn.addEventListener("click", function () {
     index = (index - 1 + items.length) % items.length;
     update();
@@ -354,8 +365,12 @@ function initCarousel(wrapper) {
 
   items.forEach(function (item, i) {
     item.addEventListener("click", function () {
-      index = i;
-      update();
+      if (i === index && !item.classList.contains("carousel-item-video")) {
+        openItemModal(item);
+      } else {
+        index = i;
+        update();
+      }
     });
   });
 
