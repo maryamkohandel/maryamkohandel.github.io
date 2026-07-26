@@ -239,11 +239,11 @@ body {
 
 .scroll-hint {
   margin-top: 44px;
-  color: #999999;
+  color: var(--text-muted);
   font-size: 0.85rem;
   letter-spacing: 1px;
   animation: bounce 2s infinite;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, color 0.4s ease;
   cursor: pointer;
 }
 
