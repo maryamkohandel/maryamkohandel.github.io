@@ -315,7 +315,7 @@ function initCarousel(wrapper) {
   const items = Array.from(wrapper.querySelectorAll(".carousel-item"));
   const prevBtn = wrapper.querySelector(".carousel-prev");
   const nextBtn = wrapper.querySelector(".carousel-next");
-  const caption = wrapper.parentElement.querySelector(".carousel-caption");
+  const caption = wrapper.nextElementSibling;
   let index = 0;
   let typingInterval = null;
 
