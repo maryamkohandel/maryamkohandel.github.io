@@ -218,17 +218,17 @@ body {
 .hero-name {
   font-size: 3.2rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text-main);
   letter-spacing: -1px;
-  text-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
+  text-shadow: 0 0 35px rgba(255, 255, 255, 0.2);
 }
 
 .hero-desc {
   margin-top: 26px;
-  color: #eeeeee;
+  color: var(--text-sub);
   font-size: 1.05rem;
   line-height: 1.85;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
 }
 
 .hero-desc.faded {
