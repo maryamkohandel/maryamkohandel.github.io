@@ -381,3 +381,37 @@ function initCarousel(wrapper) {
 document.querySelectorAll(".carousel-wrapper").forEach(function (wrapper) {
   initCarousel(wrapper);
 });
+// ===== Mobile Nav Toggle =====
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+
+if (navToggle && navLinks) {
+  navToggle.addEventListener("click", function () {
+    navToggle.classList.toggle("open");
+    navLinks.classList.toggle("open");
+  });
+
+  navLinks.querySelectorAll(".nav-link:not(.nav-dropdown .nav-link)").forEach(function (link) {
+    link.addEventListener("click", function () {
+      navToggle.classList.remove("open");
+      navLinks.classList.remove("open");
+    });
+  });
+
+  navLinks.querySelectorAll(".dropdown-item").forEach(function (item) {
+    item.addEventListener("click", function () {
+      navToggle.classList.remove("open");
+      navLinks.classList.remove("open");
+    });
+  });
+
+  const navDropdown = navLinks.querySelector(".nav-dropdown");
+  const dropdownTrigger = navDropdown.querySelector(".nav-link");
+
+  dropdownTrigger.addEventListener("click", function (e) {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      navDropdown.classList.toggle("open");
+    }
+  });
+}
